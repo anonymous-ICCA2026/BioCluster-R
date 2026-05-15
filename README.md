@@ -59,6 +59,12 @@ The text preprocessing pipeline relies on the English EWT UD model for lemmatiza
 ## 🛠 Environment Setup
 This project strictly enforces dependency versions to guarantee bit-identical reproducibility.
 
+### System Requirements
+| Component | Required Version | Notes |
+|-----------|------------------|-------|
+| R | 4.5.x | Core framework (Tested on 4.5.3) |
+| Python | 3.9+ | Required only for generating PubMedBERT embeddings |
+
 ### R Environment
 Ensure you have R installed (>= 4.1.0). From the project root, open R/RStudio and restore the environment:
 ```R
@@ -84,14 +90,14 @@ The pipeline is meticulously designed to be executed sequentially. All path rout
 ### Step 1: Preprocessing & Data Preparation
 Run the initial R scripts to establish the baseline datasets.
 ```R
-source("R/00_eda.R")
-source("R/01_preprocessing.R")
+source("R/00_eda.R")                  # ~1 min
+source("R/01_preprocessing.R")        # ~10-15 min (Lemmatization intensive)
 ```
 
 ### Step 2: Contextual Embeddings Generation
 You have two options for handling the PubMedBERT contextual embeddings:
 *   **Option A (Fast Track):** Use the pre-computed `embeddings_pubmedbert.parquet` file already provided in `data/embeddings/`. You may proceed directly to Step 3.
-*   **Option B (Full Reproduction):** Run the Python script to generate them from scratch.
+*   **Option B (Full Reproduction):** Run the Python script to generate them from scratch. *(Note: Takes ~5-10 mins depending on CPU)*
     ```bash
     source python/.venv/bin/activate
     python python/embed_pubmedbert.py
@@ -100,15 +106,27 @@ You have two options for handling the PubMedBERT contextual embeddings:
 ### Step 3: Clustering, Evaluation, and Visualization
 Execute the remaining R scripts in sequential order. All figures, tables, and metrics from the ICCA 2026 paper will be exported directly into the `figures/` and `results/` directories.
 ```R
-source("R/02_representations.R")
-source("R/03_umap_pca.R")
-source("R/04_clustering.R")
-source("R/05_evaluation.R")
-source("R/06_keywords.R")
-source("R/07_figures.R")
+source("R/02_representations.R")      # ~1 min
+source("R/03_umap_pca.R")             # ~20-40 min (TF-IDF UMAP is highly dimensional)
+source("R/04_clustering.R")           # ~5 min
+source("R/05_evaluation.R")           # ~5-8 min (Permutation tests)
+source("R/06_keywords.R")             # ~5-10 min
+source("R/07_figures.R")              # ~2 min
 ```
 
 ## ⚙️ Hardware Determinism
 To achieve absolute reproducibility and circumvent hardware-specific floating-point arithmetic variations (especially across varying GPU architectures), the following constraints are hardcoded into the pipeline:
 *   **Single-Threaded Execution:** UMAP dimensionality reduction (`uwot::umap(n_threads = 1L)`) and PyTorch embedding generation (`torch.set_num_threads(1)`) are strictly constrained to a single CPU core.
 *   **Deterministic Seeding:** Global seeds (`set.seed(42)`) are explicitly instantiated prior to any stochastic operation.
+
+<br>
+
+<details>
+<summary><b>🛠️ Troubleshooting Common Reproducibility Issues</b></summary>
+
+*   **`renv::restore()` fails on specific packages:** Certain packages (like `arrow` or `text2vec`) require system-level dependencies. On Ubuntu/Debian, running `sudo apt-get install libcurl4-openssl-dev libssl-dev` often resolves compilation issues.
+*   **Missing UDPipe Model Error in Stage 1:** Ensure `english-ewt-ud-2.5-191206.udpipe` is downloaded and placed precisely in the project root or `data/raw/` folder before running `01_preprocessing.R`.
+*   **Stage 3 (UMAP) appears to hang:** The TF-IDF UMAP reduction processes over 23,000 dimensions and can take up to 40 minutes on standard hardware. This is normal behavior; do not terminate the process.
+*   **Parquet File Not Found in Stage 2:** If you opted for full reproduction (Option B), verify the Python script successfully completed and saved the `.parquet` file in the `data/embeddings/` directory.
+
+</details>
