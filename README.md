@@ -11,9 +11,11 @@ This repository contains the complete, production-ready reproducibility pipeline
 - [Hardware Determinism](#hardware-determinism)
 
 ## 🔬 Overview
+<a id="overview"></a>
 BioCluster-R is a highly optimized, reproducible R and Python pipeline that processes medical text corpora, extracts representations, and performs rigorous clustering evaluation (K-Means, HDBSCAN, Agglomerative). It integrates the Hungarian algorithm for optimal cluster-to-class alignment, calculates multiple evaluation metrics (ARI, Macro-F1, V-Measure), and conducts permutation testing to determine algorithmic superiority.
 
 ## 📂 Repository Structure
+<a id="repository-structure"></a>
 ```text
 BioCluster-R/
 ├── R/                          # R scripts for preprocessing, clustering, and evaluation
@@ -43,6 +45,7 @@ BioCluster-R/
 ```
 
 ## 📥 Data Acquisition
+<a id="data-acquisition"></a>
 
 ### 1. Medical Abstracts Dataset
 The raw dataset is sourced from the Medical Abstracts TC Corpus.
@@ -57,6 +60,7 @@ The text preprocessing pipeline relies on the English EWT UD model for lemmatiza
 *(Note: The `data/processed/` directory in this repository already contains the balanced corpus (`corpus_balanced.rds`), and the `data/embeddings/` directory contains the pre-computed embeddings for immediate reproduction.)*
 
 ## 🛠 Environment Setup
+<a id="environment-setup"></a>
 This project strictly enforces dependency versions to guarantee bit-identical reproducibility.
 
 ### System Requirements
@@ -85,6 +89,7 @@ pip install -r requirements.txt
 ```
 
 ## 🚀 Execution & Reproducibility
+<a id="execution--reproducibility"></a>
 The pipeline is meticulously designed to be executed sequentially. All path routing is dynamically handled by `utils.R`.
 
 ### Step 1: Preprocessing & Data Preparation
@@ -115,6 +120,7 @@ source("R/07_figures.R")              # ~2 min
 ```
 
 ## ⚙️ Hardware Determinism
+<a id="hardware-determinism"></a>
 To achieve absolute reproducibility and circumvent hardware-specific floating-point arithmetic variations (especially across varying GPU architectures), the following constraints are hardcoded into the pipeline:
 *   **Single-Threaded Execution:** UMAP dimensionality reduction (`uwot::umap(n_threads = 1L)`) and PyTorch embedding generation (`torch.set_num_threads(1)`) are strictly constrained to a single CPU core.
 *   **Deterministic Seeding:** Global seeds (`set.seed(42)`) are explicitly instantiated prior to any stochastic operation.
