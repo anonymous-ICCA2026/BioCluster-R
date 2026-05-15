@@ -34,5 +34,8 @@ data/clustering/
 results/
 figures/
 project details/
-CSV Data.venv/
+CSV Data/
+english-ewt-*.udpipe
+.RDataTmp*
+.venv/
 python/.venv/

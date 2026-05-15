@@ -1,0 +1,6 @@
+"label","disease_name","n","mean_words","median_words","min_words","max_words","sd_words","n_short_lt20"
+1,"Neoplasms",3163,174.9,171,24,528,75.4,0
+2,"Digestive System Diseases",1494,179.5,180,30,417,70.9,0
+3,"Nervous System Diseases",1925,162.5,157,29,596,70.2,0
+4,"Cardiovascular Diseases",3051,199.9,205,28,578,80.3,0
+5,"General Pathological Conditions",4805,177.7,172,24,528,76.4,0

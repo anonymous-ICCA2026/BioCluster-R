@@ -1,0 +1,12 @@
+"metric","value"
+"full_corpus_docs",14438
+"n_per_class",1494
+"balanced_total_docs",7470
+"n_english_sw",175
+"n_biomedical_sw",146
+"n_combined_sw",321
+"udpipe_raw_tokens",1307165
+"tokens_kept",579276
+"pct_tokens_kept",44.3
+"vocab_size_unique_lemmas",23113
+"n_empty_docs_lt5_tokens",0
