@@ -1,5 +1,4 @@
 # BioCluster-R: A Reproducible Pipeline for Biomedical Text Clustering
-**Accepted at ICCA 2026**
 
 This repository contains the complete, production-ready reproducibility pipeline for the paper *"BioCluster: A Comparative Analysis of Contextual and Traditional Representations in Unsupervised Biomedical Text Clustering"*. It provides a rigorous framework for evaluating traditional (TF-IDF) versus deep contextual (PubMedBERT) representations in unsupervised clustering of biomedical abstracts.
 
