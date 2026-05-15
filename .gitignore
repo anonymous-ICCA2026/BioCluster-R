@@ -1,0 +1,38 @@
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.claude/
+biocluster.pdf
+# R
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*.Rout
+*.Rout.save
+.Rproj.user/
+.Renviron
+# DO NOT ignore renv.lock, as it is needed for reproducibility.
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+python/.model_cache/
+
+# Ignore intermediate data outputs
+data/repr/
+data/umap/
+data/clustering/
+
+# Ignore outputs that will be generated via reproducibility
+results/
+figures/
+project details/
+CSV Data.venv/
+python/.venv/
