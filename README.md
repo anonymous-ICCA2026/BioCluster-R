@@ -9,6 +9,7 @@ This repository contains the complete, production-ready reproducibility pipeline
 - [Environment Setup](#environment-setup)
 - [Execution & Reproducibility](#execution--reproducibility)
 - [Hardware Determinism](#hardware-determinism)
+- [AI-Assisted Development](#ai-assisted-development)
 
 ## 🔬 Overview
 <a id="overview"></a>
@@ -124,6 +125,14 @@ source("R/07_figures.R")              # ~2 min
 To achieve absolute reproducibility and circumvent hardware-specific floating-point arithmetic variations (especially across varying GPU architectures), the following constraints are hardcoded into the pipeline:
 *   **Single-Threaded Execution:** UMAP dimensionality reduction (`uwot::umap(n_threads = 1L)`) and PyTorch embedding generation (`torch.set_num_threads(1)`) are strictly constrained to a single CPU core.
 *   **Deterministic Seeding:** Global seeds (`set.seed(42)`) are explicitly instantiated prior to any stochastic operation.
+
+<br>
+
+## AI-Assisted Development
+<a id="ai-assisted-development"></a>
+AI coding assistants (Claude by Anthropic) were used during the implementation of this pipeline for tasks including code cleanup, inline commenting, refactoring, boilerplate generation, and bug fixing. All research design, experimental methodology, parameter choices, data preprocessing decisions, and result interpretation were performed by the authors. All AI-assisted code was reviewed, tested, and validated by the authors at every step. AI tools were not used in writing the paper, designing the research questions, or producing the reported results.
+
+This disclosure follows the [ACM Policy on Authorship](https://www.acm.org/publications/policies/new-acm-policy-on-authorship).
 
 <br>
 
